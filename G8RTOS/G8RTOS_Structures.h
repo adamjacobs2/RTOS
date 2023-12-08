@@ -55,6 +55,26 @@ typedef struct ptcb_t {
     uint32_t currentTime;
 } ptcb_t;
 
+typedef struct position_t {
+    uint8_t x;
+    uint16_t y;
+} position_t;
+
+typedef struct gameData_t {
+    struct position_t ball;
+    int8_t velocity;
+    struct position_t row1; //hole at x = 40 to x = 80
+    struct position_t row2; //hole at x = 120 to x = 160
+    struct position_t row3; //hole at x = 120 to x = 160
+    struct position_t row4; //hole at x = 120 to x = 160
+    struct position_t row5; //hole at x = 120 to x = 160
+    uint32_t gameTime;
+
+    uint8_t level;
+} gameData_t ;
+
+
+
 /****************************Data Structure Definitions*****************************/
 
 /********************************Public Variables***********************************/

@@ -13,6 +13,9 @@ MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/ti/ccs1240/ccs/tools/comp
 MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/machine/_stdint.h
 MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/sys/_stdint.h
 MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdbool.h
+MultimodDrivers/src/multimod_ST7789.obj: ../G8RTOS/G8RTOS_Structures.h
+MultimodDrivers/src/multimod_ST7789.obj: ../G8RTOS/G8RTOS_Structures.h
+MultimodDrivers/src/multimod_ST7789.obj: ../G8RTOS/G8RTOS_Semaphores.h
 MultimodDrivers/src/multimod_ST7789.obj: ../MultimodDrivers/multimod_spi.h
 MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/UP2/SW-TM4C-2.2.0.295/inc/hw_memmap.h
 MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/UP2/SW-TM4C-2.2.0.295/inc/hw_gpio.h
@@ -50,6 +53,12 @@ MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/UP2/RTOS/driverlib/pin_ma
 /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/sys/_stdint.h:
 
 /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdbool.h:
+
+../G8RTOS/G8RTOS_Structures.h:
+
+../G8RTOS/G8RTOS_Structures.h:
+
+../G8RTOS/G8RTOS_Semaphores.h:
 
 ../MultimodDrivers/multimod_spi.h:
 

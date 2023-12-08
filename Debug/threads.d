@@ -54,6 +54,7 @@ threads.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/i
 threads.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/time.h
 threads.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/abi_prefix.h
 threads.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/xlocale/_time.h
+threads.obj: ../driverlib/systick.h
 
 ../threads.c:
 
@@ -162,4 +163,6 @@ threads.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/i
 /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/abi_prefix.h:
 
 /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/xlocale/_time.h:
+
+../driverlib/systick.h:
 

@@ -8,6 +8,7 @@
 #include "../multimod_ST7789.h"
 
 #include "../multimod_spi.h"
+#include "../../G8RTOS/G8RTOS_Structures.h"
 
 #include <inc/tm4c123gh6pm.h>
 #include <inc/hw_types.h>
@@ -379,20 +380,81 @@ void ST7789_DrawRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16
     }
     ST7789_Deselect();
 }
+void ST7789_DrawRow(position_t row, uint8_t hole, uint8_t level, uint16_t color) {
+    //draw the new pixels in each row
+        ST7789_SetWindow(0, row.y, hole, level); //TODO: Account for faster levels
+        uint8_t color_hi = color >> 8;
+        uint8_t color_lo = color & 0xFF;
+        uint32_t num_p = hole * level;
+        while (num_p--) {
+            ST7789_WriteData(color_hi);
+            ST7789_WriteData(color_lo);
+        }
 
-void ST7789_UpdateGame(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color) {
-    uint8_t color_hi, color_lo;
+        ST7789_SetWindow(hole + 40, row.y, 200 - hole, level); //TODO: Account for faster levels
+        color_hi = color >> 8;
+        color_lo = color & 0xFF;
+        num_p = (200 - hole) * level;
+        while (num_p--) {
+            ST7789_WriteData(color_hi);
+            ST7789_WriteData(color_lo);
+         }
+}
+
+void ST7789_ClearRow(position_t row, uint8_t level) {
+    //draws the the rows pixels partially black (bottom sliver)
+      ST7789_SetWindow(row.x, row.y, 240, level); //TODO: Account for faster levels
+
+      uint32_t num_p = 240 * level;
+      while (num_p--) {
+          ST7789_WriteData(0); //black
+          ST7789_WriteData(0);
+      }
+}
+
+
+
+//This function Will be called in a periodic thread that will update the game at a rate of 60 Hz
+void ST7789_UpdateScreen(gameData_t gameNew, gameData_t gamePrev) {
     ST7789_Select();
-    ST7789_SetWindow(x, y, w, h);
 
-    color_hi = color >> 8;
-    color_lo = color & 0xFF;
+    //draws the balls previous position black
+    ST7789_SetWindow(gamePrev.ball.x, gamePrev.ball.y,20, 20);
 
-    uint32_t num_p = (uint32_t)w * (uint32_t)h;
+    uint32_t num_p = 400; //400 pixel ball
     while (num_p--) {
-        ST7789_WriteData(color_hi);
-        ST7789_WriteData(color_lo);
+        ST7789_WriteData(0); //black
+        ST7789_WriteData(0);
     }
+
+    ST7789_ClearRow(gamePrev.row1, gameNew.level);
+    ST7789_ClearRow(gamePrev.row2, gameNew.level);
+    ST7789_ClearRow(gamePrev.row3, gameNew.level);
+    ST7789_ClearRow(gamePrev.row4, gameNew.level);
+    ST7789_ClearRow(gamePrev.row5, gameNew.level);
+
+
+    ST7789_DrawRow(gameNew.row1, 40, gameNew.level, ST7789_GREEN);
+    ST7789_DrawRow(gameNew.row2, 120, gameNew.level, ST7789_GREEN);
+    ST7789_DrawRow(gameNew.row3, 40, gameNew.level, ST7789_GREEN);
+    ST7789_DrawRow(gameNew.row4, 120, gameNew.level, ST7789_GREEN);
+    ST7789_DrawRow(gameNew.row5, 40, gameNew.level, ST7789_GREEN);
+
+
+
+
+
+    //draws the balls new position white
+    ST7789_SetWindow(gamePrev.ball.x, gamePrev.ball.y, 20, 20);
+
+    num_p = 400; //400 pixel ball
+    while (num_p--) {
+        ST7789_WriteData(0xFF); //white
+        ST7789_WriteData(0xFF);
+     }
+
+
+
     ST7789_Deselect();
 }
 

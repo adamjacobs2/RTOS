@@ -29,22 +29,13 @@ semaphore_t sem_SPIA;
 semaphore_t sem_PCA9555_Debounce;
 semaphore_t sem_Joystick_Debounce;
 semaphore_t sem_KillCube;
-semaphore_t sem_Camera;
+semaphore_t sem_Joystick;
+
 
 // Stores
-typedef struct gameData_t {
-    uint;
-    struct ptcb_t *previousPTCB;
-    struct ptcb_t *nextPTCB;
-    uint32_t period;
-    uint32_t executeTime;
-    uint32_t currentTime;
-} gameData_t ;
 
-typedef struct postion {
-    uint8_t x;
 
-} ptcb_t;
+
 
 
 /***********************************Semaphores**************************************/
@@ -68,7 +59,9 @@ void Read_JoystickPress(void);
 void Floor_Thread(void);
 void Update_Ball(void);
 void Increment_Thread(void);
-
+void Init_GameData(void);
+void Draw_Thread(void);
+void Convert_Joystick(void);
 /*******************************Background Threads**********************************/
 
 /********************************Periodic Threads***********************************/

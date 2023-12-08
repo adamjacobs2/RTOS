@@ -10,6 +10,8 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "../G8RTOS/G8RTOS_Structures.h"
+
 
 /************************************Includes***************************************/
 
@@ -108,7 +110,9 @@ void ST7789_Fill(uint16_t color);
 void ST7789_DrawPixel(uint16_t x, uint16_t y, uint16_t color);
 void ST7789_DrawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color);
 void ST7789_DrawRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
-
+void ST7789_DrawRow(position_t row, uint8_t hole, uint8_t level, uint16_t color);
+void ST7789_ClearRow(position_t row, uint8_t level);
+void ST7789_UpdateScreen(gameData_t gameNew, gameData_t gamePrev);
 /********************************Public Functions***********************************/
 
 /*******************************Private Variables***********************************/

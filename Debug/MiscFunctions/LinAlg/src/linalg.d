@@ -15,6 +15,9 @@ MiscFunctions/LinAlg/src/linalg.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler
 MiscFunctions/LinAlg/src/linalg.obj: ../MiscFunctions/LinAlg/inc/vect3d.h
 MiscFunctions/LinAlg/src/linalg.obj: ../MultimodDrivers/multimod_ST7789.h
 MiscFunctions/LinAlg/src/linalg.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdbool.h
+MiscFunctions/LinAlg/src/linalg.obj: ../G8RTOS/G8RTOS_Structures.h
+MiscFunctions/LinAlg/src/linalg.obj: ../G8RTOS/G8RTOS_Structures.h
+MiscFunctions/LinAlg/src/linalg.obj: ../G8RTOS/G8RTOS_Semaphores.h
 MiscFunctions/LinAlg/src/linalg.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/math.h
 MiscFunctions/LinAlg/src/linalg.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/_defs.h
 MiscFunctions/LinAlg/src/linalg.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/machine/_limits.h
@@ -48,6 +51,12 @@ MiscFunctions/LinAlg/src/linalg.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler
 ../MultimodDrivers/multimod_ST7789.h:
 
 /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdbool.h:
+
+../G8RTOS/G8RTOS_Structures.h:
+
+../G8RTOS/G8RTOS_Structures.h:
+
+../G8RTOS/G8RTOS_Semaphores.h:
 
 /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/math.h:
 

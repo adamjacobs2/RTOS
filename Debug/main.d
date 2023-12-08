@@ -46,6 +46,9 @@ main.obj: ../threads.h
 main.obj: ../driverlib/systick.h
 main.obj: ../driverlib/interrupt.h
 main.obj: /home/diamond/UP2/SW-TM4C-2.2.0.295/inc/hw_nvic.h
+main.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/time.h
+main.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/abi_prefix.h
+main.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/xlocale/_time.h
 
 ../main.c:
 
@@ -138,4 +141,10 @@ main.obj: /home/diamond/UP2/SW-TM4C-2.2.0.295/inc/hw_nvic.h
 ../driverlib/interrupt.h:
 
 /home/diamond/UP2/SW-TM4C-2.2.0.295/inc/hw_nvic.h:
+
+/home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/time.h:
+
+/home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/abi_prefix.h:
+
+/home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/xlocale/_time.h:
 
