@@ -27,6 +27,7 @@ MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/UP2/RTOS/driverlib/gpio.h
 MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/UP2/RTOS/driverlib/sysctl.h
 MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/UP2/RTOS/driverlib/uart.h
 MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/UP2/RTOS/driverlib/pin_map.h
+MultimodDrivers/src/multimod_ST7789.obj: ../sprites.c
 
 ../MultimodDrivers/src/multimod_ST7789.c:
 
@@ -81,4 +82,6 @@ MultimodDrivers/src/multimod_ST7789.obj: /home/diamond/UP2/RTOS/driverlib/pin_ma
 /home/diamond/UP2/RTOS/driverlib/uart.h:
 
 /home/diamond/UP2/RTOS/driverlib/pin_map.h:
+
+../sprites.c:
 

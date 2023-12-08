@@ -81,154 +81,142 @@ void Lose(void){
 }
 
 
-//updates the bars and returns to bottom of screen
-void Floor_Thread(void){
-    while(1){
-
-        ST7789_DrawRectangle(0, 280, 240, 20, ST7789_RED);
-        ST7789_DrawRectangle(ball_x_position, ball_y_position, 20, 20, ST7789_BLACK);
-        ST7789_DrawRectangle(0, floor_one_y, 240 , 10, ST7789_BLACK);
-        ST7789_DrawRectangle(0, floor_two_y, 240 , 10, ST7789_BLACK);
-        ST7789_DrawRectangle(0, floor_three_y, 240 , 10, ST7789_BLACK);
-
-        ball_x_position += boost * ball_x_offset;
-
-        G8RTOS_WaitSemaphore(&sem_Render);
-        floor_one_y += 1 * game_time;
-       if (floor_one_y >= 310){
-           floor_one_y = 20;
-       }
-
-       floor_two_y += 1 * game_time;
-       if (floor_two_y >= 310){
-           floor_two_y = 20;
-       }
-
-       floor_three_y += 1  * game_time;
-       if (floor_three_y >= 310){
-           floor_three_y = 20;
-       }
-       G8RTOS_SignalSemaphore(&sem_Render);
-        ball_y_position += ball_y_offset;
-        if (ball_y_position == 310){
-            ball_y_position = 20;
-        }
-
-
-     //white row
-     // G8RTOS_WaitSemaphore(&sem_SPIA);
-     //ST7789_DrawRectangle(0, floor_three_y, FloorThree, 10, 0xFFFF);
-     //G8RTOS_SignalSemaphore(&sem_SPIA);
-     //G8RTOS_WaitSemaphore(&sem_SPIA);
-    // ST7789_DrawRectangle(FloorThree + 40 , floor_three_y, 200 - FloorThree, 10, 0xFFFF);
-     //G8RTOS_SignalSemaphore(&sem_SPIA);
-
-
-     //red row
-     //ST7789_DrawRectangle(0, floor_one_y, FloorOne, 10, ST7789_RED);
-     //ST7789_DrawRectangle(FloorOne + 40 , floor_one_y, 200 - FloorOne, 10, ST7789_RED);
-
-    //blue row
-    //ST7789_DrawRectangle(0, floor_two_y, FloorTwo, 10, ST7789_BLUE);
-    //ST7789_DrawRectangle(FloorTwo + 40 , floor_two_y, 200 - FloorTwo, 10, ST7789_BLUE);
-
-
-   G8RTOS_WaitSemaphore(&sem_SPIA);
-  // ST7789_DrawRectangle(ball_x_position, ball_y_position, 20, 20, 0xFFFF);
-   G8RTOS_SignalSemaphore(&sem_SPIA);
-
-
-   sleep(20);
-   }
-}
-
 
 void Draw_Thread(void){
     while(1){
 
-
-
+    G8RTOS_WaitSemaphore(&sem_Render);
     ST7789_UpdateScreen(gameNew, gamePrev);
-    sleep(20);
-
+    G8RTOS_SignalSemaphore(&sem_Render);
 
     }
-
-
 }
 
 void Init_GameData(void){
     gameNew.ball.x = 100;
-    gameNew.ball.y = 271;
+    gameNew.ball.y = 65;
 
-    gameNew.row1.x = 0;
-    gameNew.row1.y = 256;
+    gameNew.rows[0].x = 0;
+    gameNew.rows[0].y = 256;
+    gameNew.rows[0].hole = 40;
 
-    gameNew.row2.x = 0;
-    gameNew.row2.y = 192;
-    gameNew.row2.x = 0;
+    gameNew.rows[1].x = 0;
+    gameNew.rows[1].y = 192;
+    gameNew.rows[1].hole = 120;
 
-    gameNew.row3.y = 128;
-    gameNew.row3.x = 0;
+    gameNew.rows[2].y = 128;
+    gameNew.rows[2].x = 0;
+    gameNew.rows[2].hole = 40;
 
-    gameNew.row4.y = 64;
-    gameNew.row4.x = 0;
+    gameNew.rows[3].y = 64;
+    gameNew.rows[3].x = 0;
+    gameNew.rows[3].hole = 120;
 
-    gameNew.row5.x = 0;
-    gameNew.row5.y = 0;
+    gameNew.rows[4].x = 0;
+    gameNew.rows[4].y = 0;
+    gameNew.rows[4].hole = 40;
+
+    gameNew.gameScore = 0;
 
     gameNew.gameTime = 0;
     gameNew.level = 1;
+
+    gameNew.velocity = 1;
 }
+
 void Increment_Thread(void){
+    while(1){
+        G8RTOS_WaitSemaphore(&sem_Render);
+        uint32_t joy_val = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
+        uint16_t x_val = joy_val >> 16; // x left is max x right is min need to fix
+        uint16_t y_val = joy_val;
+        // If joystick axis within deadzone, set to 0. Otherwise normalize it.
+        float normalized_y_Value = ((float) y_val - 2048) / ((float) 2048);
+        float normalized_x_Value = (((float) x_val - 2048) / 2048);
+
+        if(normalized_x_Value < 0.2 && normalized_x_Value > -0.2 ){
+            normalized_x_Value = 0;
+        }
+
+
+        //world_camera_pos.x = x_val;
+        normalized_x_Value *= -1;
+
+        // Update world camera position. Update y/z coordinates depending on the joystick toggle.
+
+        if(normalized_x_Value > 0) ball_x_offset = 2;
+        else if (normalized_x_Value < 0) ball_x_offset = -2;
+        else ball_x_offset = 0;
 
 
 
-    uint32_t joy_val = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
-    uint16_t x_val = joy_val >> 16; // x left is max x right is min need to fix
-    uint16_t y_val = joy_val;
-    // If joystick axis within deadzone, set to 0. Otherwise normalize it.
-    float normalized_y_Value = ((float) y_val - 2048) / ((float) 2048);
-    float normalized_x_Value = (((float) x_val - 2048) / 2048);
+        gamePrev = gameNew;
 
-    if(normalized_x_Value < 0.2 && normalized_x_Value > -0.2 ){
-        normalized_x_Value = 0;
-    }
+        gameNew.ball.x += ball_x_offset;
+        if(gameNew.rows[0].y++ >= 310){
+            gameNew.rows[0].y =0;
+        }
 
+        if(gameNew.rows[1].y++ >= 310){
+            gameNew.rows[1].y =0;
+         }
 
-    //world_camera_pos.x = x_val;
-    normalized_x_Value *= -1;
-
-    // Update world camera position. Update y/z coordinates depending on the joystick toggle.
-
-    if(normalized_x_Value > 0) ball_x_offset = 2;
-    else if (normalized_x_Value < 0) ball_x_offset = -2;
-    else ball_x_offset = 0;
-
-    gamePrev = gameNew;
-
-    gameNew.ball.x += ball_x_offset;
-    if(gameNew.row1.y++ >= 310){
-        gameNew.row1.y =0;
-    }
-
-    if(gameNew.row2.y++ >= 310){
-        gameNew.row2.y =0;
+        if(gameNew.rows[2].y++ >= 310){
+            gameNew.rows[2].y =0;
      }
 
-        if(gameNew.row3.y++ >= 310){
-            gameNew.row3.y =0;
-     }
+        if(gameNew.rows[3].y++ >= 310){
+            gameNew.rows[3].y =0;
+         }
 
-    if(gameNew.row4.y++ >= 310){
-        gameNew.row4.y =0;
-     }
+        if(gameNew.rows[4].y++ >= 310){
+           gameNew.rows[4].y = 0;
+        }
 
-    if(gameNew.row5.y++ >= 310){
-       gameNew.row5.y = 0;
+
+        //If the ball is already on a surface, make sure it's not over the gap
+        if (gamePrev.velocity == gamePrev.level){ //level updates for next game state
+            //ball is in contact with rows[0]
+
+            for(uint8_t i = 0; i < 5; i++){
+                if(gameNew.ball.y - gameNew.rows[i].y == 0){
+                    if(gameNew.ball.x >= gameNew.rows[i].hole && gameNew.ball.x <= gameNew.rows[i].hole + 25){
+                        gameNew.velocity = -2;
+                        gameNew.gameScore++;
+                    }
+                    break;
+                }
+            }
+
+        }
+        else if(gamePrev.velocity != gamePrev.level){ //the ball is currently in free fall
+            //check to see if the ball would have fell through the floor between states
+            for(uint8_t i = 0; i < 5; i++){
+                if(gameNew.ball.y + 1 <= gameNew.rows[i].y && gameNew.ball.y + 1 >= gamePrev.rows[i].y){
+                    if(gameNew.ball.x >= gameNew.rows[i].hole && gameNew.ball.x <= gameNew.rows[i].hole + 25){
+                        gameNew.velocity = -2;
+                        gameNew.gameScore++;
+                    }
+                    else{
+                        gameNew.velocity = gamePrev.level;
+                        gameNew.ball.y = gameNew.rows[i].y;
+                    }
+                    break;
+                 }
+            }
+        }
+
+
+        gameNew.ball.y += gameNew.velocity;
+        if(gameNew.ball.y <= 1) gameNew.ball.y = 5;
+        gameNew.gameTime++;
+        gameNew.level = 1;
+
+        G8RTOS_SignalSemaphore(&sem_Render);
+        sleep(2);
+
     }
-    gameNew.gameTime++;
-    gameNew.level = 1;
+
 
 
 
@@ -237,98 +225,12 @@ void Increment_Thread(void){
 
 
 
-//void move_Thread(void){
-//    while(1) {
-//
-//            // Get result from joystick
-//            //check if ball position is not touching the rows
-//            G8RTOS_WaitSemaphore(&sem_Render);
-//            if (jump == 3){
-//                ball_y_offset = 8;
-//                jump--;
-//            }
-//            else if (jump == 2){
-//                ball_y_offset = 7;
-//                jump--;
-//            }
-//            else if (jump == 1){
-//                ball_y_offset = 5;
-//                jump--;
-//            }
-//                //check to see if ball is on floor 2
-//            else if (ball_y_position - floor_two_y  <= 12 &&
-//                       ball_y_position - floor_two_y + 10 >= 0){
-//
-//                   //check to see if it is over gap
-////                   //if(ball_x_position >= FloorTwo && ball_x_position <= FloorTwo + 40){
-//                       //ball_y_offset = -2;
-//                   //}
-////                   //ball is rising if not over gap
-////                   else{
-////                           ball_y_offset = 1;
-////                           ball_y_position = floor_two_y + 10;
-////                    }
-//
-//
-//               }
-//               //check to see if ball is on floor 3
-//               else if(ball_y_position - floor_three_y  <= 12 &&
-//                   ball_y_position - floor_three_y  >= 0){
-//                   //check to see if ball is over gap (make it fall)
-//                   if(ball_x_position >= FloorThree && ball_x_position <= FloorThree + 40){
-//                         ball_y_offset = -2;
-//                    }
-//                     //if the ball is not over the gap the to see if jump is high
-//                     else{
-//
-//                         if(jump  == 3){
-//                               jump--;
-//                               ball_y_offset = 5;
-//                           }
-//
-//                         else{
-//                         ball_y_offset = 1;
-//                         ball_y_position = floor_three_y + 10;
-//                         }
-//                     }
-//    }
-//               //the ball is falling
-//               else{
-//                   ball_y_offset = -2;
-//               }
-//            uint32_t joy_val = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
-//            uint16_t x_val = joy_val >> 16; // x left is max x right is min need to fix
-//            uint16_t y_val = joy_val;
-//            // If joystick axis within deadzone, set to 0. Otherwise normalize it.
-//            float normalized_y_Value = ((float) y_val - 2048) / ((float) 2048);
-//            float normalized_x_Value = (((float) x_val - 2048) / 2048);
-//
-//            if(normalized_x_Value < 0.2 && normalized_x_Value > -0.2 ){
-//                normalized_x_Value = 0;
-//            }
-//
-//
-//            //world_camera_pos.x = x_val;
-//            normalized_x_Value *= -1;
-//
-//            // Update world camera position. Update y/z coordinates depending on the joystick toggle.
-//
-//            if(normalized_x_Value > 0) ball_x_offset = 2;
-//            else if (normalized_x_Value < 0) ball_x_offset = -2;
-//            else ball_x_offset = 0;
-//            G8RTOS_SignalSemaphore(&sem_Render);
-//            // sleep
-//            sleep(10);
-//
-//        }
-//}
+
 void Idle_Thread(void) {
     time_t t;
     srand((unsigned) time(&t));
     while(1);
 }
-
-
 
 
 void Read_Buttons() {
@@ -379,9 +281,7 @@ void Read_Buttons() {
 
 
 
-
 /********************************Periodic Threads***********************************/
-
 
 
 void Get_Joystick(void) {

@@ -21,6 +21,8 @@
 #include <driverlib/uart.h>
 #include <driverlib/pin_map.h>
 
+#include "../../sprites.c"
+
 /***********************************Macro Defines***********************************/
 #ifndef _swap_int16_t
 #define _swap_int16_t(a, b) \
@@ -412,42 +414,55 @@ void ST7789_ClearRow(position_t row, uint8_t level) {
       }
 }
 
+void ST7789_DrawSprite(position_t location, const uint16_t pixels[], uint16_t size){
+    ST7789_SetWindow(location.x, location.y, size, size);
+    uint16_t num_p = size * size;
 
+    for(uint8_t i = 0; i < num_p; i++){
+        ST7789_WriteData(pixels[i] >> 8);
+        ST7789_WriteData(pixels[i] & 0xFF);
+    }
+}
 
 //This function Will be called in a periodic thread that will update the game at a rate of 60 Hz
 void ST7789_UpdateScreen(gameData_t gameNew, gameData_t gamePrev) {
     ST7789_Select();
 
     //draws the balls previous position black
-    ST7789_SetWindow(gamePrev.ball.x, gamePrev.ball.y,20, 20);
+    ST7789_SetWindow(gamePrev.ball.x, gamePrev.ball.y,15, 15);
 
-    uint32_t num_p = 400; //400 pixel ball
+    uint32_t num_p = 225; //400 pixel ball
     while (num_p--) {
         ST7789_WriteData(0); //black
         ST7789_WriteData(0);
     }
 
-    ST7789_ClearRow(gamePrev.row1, gameNew.level);
-    ST7789_ClearRow(gamePrev.row2, gameNew.level);
-    ST7789_ClearRow(gamePrev.row3, gameNew.level);
-    ST7789_ClearRow(gamePrev.row4, gameNew.level);
-    ST7789_ClearRow(gamePrev.row5, gameNew.level);
+    ST7789_ClearRow(gamePrev.rows[0], gameNew.level);
+    ST7789_ClearRow(gamePrev.rows[1], gameNew.level);
+    ST7789_ClearRow(gamePrev.rows[2], gameNew.level);
+    ST7789_ClearRow(gamePrev.rows[3], gameNew.level);
+    ST7789_ClearRow(gamePrev.rows[4], gameNew.level);
 
 
-    ST7789_DrawRow(gameNew.row1, 40, gameNew.level, ST7789_GREEN);
-    ST7789_DrawRow(gameNew.row2, 120, gameNew.level, ST7789_GREEN);
-    ST7789_DrawRow(gameNew.row3, 40, gameNew.level, ST7789_GREEN);
-    ST7789_DrawRow(gameNew.row4, 120, gameNew.level, ST7789_GREEN);
-    ST7789_DrawRow(gameNew.row5, 40, gameNew.level, ST7789_GREEN);
+    ST7789_DrawRow(gameNew.rows[0], 40, gameNew.level, ST7789_GREEN);
+    ST7789_DrawRow(gameNew.rows[1], 120, gameNew.level, ST7789_GREEN);
+    ST7789_DrawRow(gameNew.rows[2], 40, gameNew.level, ST7789_GREEN);
+    ST7789_DrawRow(gameNew.rows[3], 120, gameNew.level, ST7789_GREEN);
+    ST7789_DrawRow(gameNew.rows[4], 40, gameNew.level, ST7789_GREEN);
+
+    position_t num;
+    num.x = 200;
+    num.y = 200;
+    //ST7789_DrawSprite(num, one_sprite , 25);
 
 
 
 
 
     //draws the balls new position white
-    ST7789_SetWindow(gamePrev.ball.x, gamePrev.ball.y, 20, 20);
+    ST7789_SetWindow(gameNew.ball.x, gameNew.ball.y, 15, 15);
 
-    num_p = 400; //400 pixel ball
+    num_p = 225; //400 pixel ball
     while (num_p--) {
         ST7789_WriteData(0xFF); //white
         ST7789_WriteData(0xFF);
