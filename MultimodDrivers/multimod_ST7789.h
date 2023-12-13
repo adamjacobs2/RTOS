@@ -86,6 +86,8 @@
 #define ST7789_RED                  0x001F
 #define ST7789_BLUE                 0xF800
 #define ST7789_GREEN                0x07E0
+#define ST7789_YELLOW               0xFFE0
+#define ST7789_MAGENTA              0xF81F
 
 /*************************************Defines***************************************/
 
@@ -112,7 +114,7 @@ void ST7789_DrawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_
 void ST7789_DrawRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
 void ST7789_DrawRow(position_t row, uint8_t hole, uint8_t level, uint16_t color);
 void ST7789_ClearRow(position_t row, uint8_t level);
-void ST7789_UpdateScreen(gameData_t gameNew, gameData_t gamePrev);
+void ST7789_UpdateScreen(gameData_t gameNew, gameData_t gamePrev, uint16_t rowColor);
 void ST7789_DrawSprite(position_t location, const uint16_t pixels[], uint16_t size);
 /********************************Public Functions***********************************/
 

@@ -14,7 +14,7 @@
 
 /*************************************Defines***************************************/
 
-#define SPAWNCOOR_FIFO      0
+#define GYRO_FIFO           0
 #define JOYSTICK_FIFO       1
 
 /*************************************Defines***************************************/
@@ -62,6 +62,7 @@ void Increment_Thread(void);
 void Init_GameData(void);
 void Draw_Thread(void);
 void Convert_Joystick(void);
+void Read_Gyroscope(void);
 /*******************************Background Threads**********************************/
 
 /********************************Periodic Threads***********************************/

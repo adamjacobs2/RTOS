@@ -67,7 +67,7 @@ typedef struct gameData_t {
     struct position_t rows[5];
     uint32_t gameTime;
     uint32_t gameScore;
-
+    uint16_t rowColor;
     uint8_t level;
 } gameData_t ;
 

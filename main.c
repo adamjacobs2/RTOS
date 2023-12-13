@@ -60,6 +60,7 @@ int main(void)
     G8RTOS_AddThread(Idle_Thread, 254, "idle", globalID++);
     G8RTOS_AddThread(Draw_Thread, 250, "draw", globalID++);
     G8RTOS_AddThread(Increment_Thread, 249, "inc", globalID++);
+
     //G8RTOS_AddThread(Read_Buttons, 101, "buttons\0", globalID++);
 
     //Aperiodic Threads
@@ -68,7 +69,7 @@ int main(void)
 
     //Periodic Threads
     G8RTOS_Add_PeriodicEvent(Get_Joystick, 25, 10);
-
+    //G8RTOS_Add_PeriodicEvent(Read_Gyroscope, 25, 10);
 
 
     //G8RTOS_Add_PeriodicEvent(Draw_Thread, 30, 1);
@@ -82,6 +83,7 @@ int main(void)
 
     //FIFO / Interprocess communication
     G8RTOS_InitFIFO(JOYSTICK_FIFO);
+    G8RTOS_InitFIFO(GYRO_FIFO);
 
     G8RTOS_Launch();
 

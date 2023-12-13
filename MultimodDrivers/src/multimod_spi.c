@@ -36,7 +36,7 @@ void SPI_Init(uint32_t mod) {
 
         SSIDisable(mod);
         SSIClockSourceSet(mod, SSI_CLOCK_SYSTEM);
-        SSIConfigSetExpClk(SSI0_BASE, SysCtlClockGet(), SSI_FRF_MOTO_MODE_3, SSI_MODE_MASTER, 15000000, 8);
+        SSIConfigSetExpClk(SSI0_BASE, SysCtlClockGet(), SSI_FRF_MOTO_MODE_3, SSI_MODE_MASTER, 20000000, 8);
         SSIEnable(mod);
     }
 }
