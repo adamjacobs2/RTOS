@@ -74,6 +74,14 @@ tcb_t* CurrentlyRunningThread;
 // SysTick_Handler
 // Increments system time, sets PendSV flag to start scheduler.
 // Return: void
+
+
+uint32_t GetSystemTime(void){
+    return SystemTime;
+}
+void RemovePThread(void){
+    NumberOfPThreads--;
+}
 void SysTick_Handler() {
     SystemTime++;
     //determine if a periodic thread should be run

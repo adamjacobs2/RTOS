@@ -73,6 +73,17 @@ typedef struct gameData_t {
 
 
 
+enum BUTTON {
+    NULL,    // 0
+    PLAY,    // 1
+    SETTINGS,// 2
+    CREDITS  // 3
+};
+
+
+
+
+
 /****************************Data Structure Definitions*****************************/
 
 /********************************Public Variables***********************************/

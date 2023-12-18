@@ -5,7 +5,6 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../MultimodDrivers/src/GFX_Library.c \
-../MultimodDrivers/src/ST7789.c \
 ../MultimodDrivers/src/multimod_BMI160.c \
 ../MultimodDrivers/src/multimod_LaunchpadButtons.c \
 ../MultimodDrivers/src/multimod_LaunchpadLED.c \
@@ -20,7 +19,6 @@ C_SRCS += \
 
 C_DEPS += \
 ./MultimodDrivers/src/GFX_Library.d \
-./MultimodDrivers/src/ST7789.d \
 ./MultimodDrivers/src/multimod_BMI160.d \
 ./MultimodDrivers/src/multimod_LaunchpadButtons.d \
 ./MultimodDrivers/src/multimod_LaunchpadLED.d \
@@ -35,7 +33,6 @@ C_DEPS += \
 
 OBJS += \
 ./MultimodDrivers/src/GFX_Library.obj \
-./MultimodDrivers/src/ST7789.obj \
 ./MultimodDrivers/src/multimod_BMI160.obj \
 ./MultimodDrivers/src/multimod_LaunchpadButtons.obj \
 ./MultimodDrivers/src/multimod_LaunchpadLED.obj \
@@ -50,7 +47,6 @@ OBJS += \
 
 OBJS__QUOTED += \
 "MultimodDrivers/src/GFX_Library.obj" \
-"MultimodDrivers/src/ST7789.obj" \
 "MultimodDrivers/src/multimod_BMI160.obj" \
 "MultimodDrivers/src/multimod_LaunchpadButtons.obj" \
 "MultimodDrivers/src/multimod_LaunchpadLED.obj" \
@@ -65,7 +61,6 @@ OBJS__QUOTED += \
 
 C_DEPS__QUOTED += \
 "MultimodDrivers/src/GFX_Library.d" \
-"MultimodDrivers/src/ST7789.d" \
 "MultimodDrivers/src/multimod_BMI160.d" \
 "MultimodDrivers/src/multimod_LaunchpadButtons.d" \
 "MultimodDrivers/src/multimod_LaunchpadLED.d" \
@@ -80,7 +75,6 @@ C_DEPS__QUOTED += \
 
 C_SRCS__QUOTED += \
 "../MultimodDrivers/src/GFX_Library.c" \
-"../MultimodDrivers/src/ST7789.c" \
 "../MultimodDrivers/src/multimod_BMI160.c" \
 "../MultimodDrivers/src/multimod_LaunchpadButtons.c" \
 "../MultimodDrivers/src/multimod_LaunchpadLED.c" \

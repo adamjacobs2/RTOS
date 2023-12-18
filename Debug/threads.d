@@ -49,6 +49,10 @@ threads.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/i
 threads.obj: ../MiscFunctions/LinAlg/inc/quaternions.h
 threads.obj: ../MiscFunctions/LinAlg/inc/vect3d.h
 threads.obj: ../MiscFunctions/LinAlg/inc/linalg.h
+threads.obj: ../MultimodDrivers/GFX_Library.h
+threads.obj: /home/diamond/UP2/RTOS/driverlib/pin_map.h
+threads.obj: /home/diamond/UP2/RTOS/driverlib/rom.h
+threads.obj: ../MultimodDrivers/ST7789.h
 threads.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdio.h
 threads.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdlib.h
 threads.obj: /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/time.h
@@ -153,6 +157,14 @@ threads.obj: ../driverlib/systick.h
 ../MiscFunctions/LinAlg/inc/vect3d.h:
 
 ../MiscFunctions/LinAlg/inc/linalg.h:
+
+../MultimodDrivers/GFX_Library.h:
+
+/home/diamond/UP2/RTOS/driverlib/pin_map.h:
+
+/home/diamond/UP2/RTOS/driverlib/rom.h:
+
+../MultimodDrivers/ST7789.h:
 
 /home/diamond/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdio.h:
 

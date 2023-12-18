@@ -35,50 +35,35 @@ int main(void)
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
     G8RTOS_Init();
 
-
     multimod_init();
     //set background
     ST7789_Fill(ST7789_BLACK);
-    //set death zone
-    ST7789_DrawRectangle(0, 280, 240, 20, ST7789_RED);
 
-
+    //sets the current position and velocity of game objects
     Init_GameData();
-
-
-
-
-
-
-
-
-    //while(1);
-
+    Init_Screen();
 
     //Background Threads
+    G8RTOS_AddThread(Idle_Thread, 254, "idle", 99);
+    G8RTOS_AddThread(Read_Buttons, 151, "buttons\0", 9);
+    G8RTOS_AddThread(Menu_Thread, 150, "buttons\0", 10);
 
-    G8RTOS_AddThread(Idle_Thread, 254, "idle", globalID++);
-    G8RTOS_AddThread(Draw_Thread, 250, "draw", globalID++);
-    G8RTOS_AddThread(Increment_Thread, 249, "inc", globalID++);
-
-    //G8RTOS_AddThread(Read_Buttons, 101, "buttons\0", globalID++);
 
     //Aperiodic Threads
-
     G8RTOS_Add_APeriodicEvent(GPIOE_Handler, 5, 20);
 
+
     //Periodic Threads
-    G8RTOS_Add_PeriodicEvent(Get_Joystick, 25, 10);
-    //G8RTOS_Add_PeriodicEvent(Read_Gyroscope, 25, 10);
+    G8RTOS_Add_PeriodicEvent(Get_JoystickY, 20, 1);
 
-
-    //G8RTOS_Add_PeriodicEvent(Draw_Thread, 30, 1);
 
     //Semaphores
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
     G8RTOS_InitSemaphore(&sem_Render, 1);
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
     G8RTOS_InitSemaphore(&sem_Joystick, 1);
+    G8RTOS_InitSemaphore(&sem_Pause, 0);
+    G8RTOS_InitSemaphore(&sem_GameOver, 0);
 
 
     //FIFO / Interprocess communication
@@ -91,5 +76,4 @@ int main(void)
 }
 
 /************************************MAIN*******************************************/
-;
 ;
